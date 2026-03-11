@@ -176,11 +176,12 @@ docker-compose restart
 docker-compose logs -f
 ```
 
-**Delete old image**
+**Delete old image and restart**
 ```bash
 docker images
 docker image rm 3rm4zy/m4.link:latest
 docker pull 3rm4zy/m4.link:latest
+docker compose up -d
 ```
 
 ## License
