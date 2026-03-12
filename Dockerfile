@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY templates/ templates/
 COPY config.ini .
 COPY entrypoint.py .
-COPY app.py .
+COPY m4.link.app.py .
 
 
 RUN useradd -m -u 1000 appuser
@@ -19,4 +19,4 @@ USER appuser
 
 EXPOSE 5000
 
-CMD ["sh", "-c", "python entrypoint.py && gunicorn --bind 0.0.0.0:5000 app:app"]
+CMD ["sh", "-c", "python entrypoint.py && python m4.link.app.py"]
