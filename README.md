@@ -30,7 +30,6 @@ Avatar_Style=rounded
 button_style=rounded
 button_color=#1DA1F2
 Background=https://example.com/background.jpg
-favicon=https://example.com/favicon.ico
 
 [link 1]
 Title=My Website
@@ -40,32 +39,49 @@ Description=My personal website
 Background=#1DA1F2
 
 [link 2]
-Title=GitHub
-URL=https://github.com/username
-Icon=https://example.com/github.png
+Title=Tangled
+URL=https://tangled.org/
+Icon=https://images.com/logo.png
 ```
 
 ### 2. Create `docker-compose.yml`
 
 ```yaml
 services:
-  m4link:
+  m4.link:
     image: 3rm4zy/m4.link:latest
-    container_name: m4link
+    container_name: m4.link
+    user: 1000:1000
     ports:
       - "5000:5000"
     volumes:
       - ./config.ini:/app/config.ini:ro
-    environment:
-      - FLASK_ENV=production
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
     read_only: true
     tmpfs:
       - /tmp
       - /run
       - /app/html
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 128M
+        reservations:
+          cpus: '0.25'
+          memory: 64M
 ```
 
 ### 3. Deploy
@@ -103,7 +119,7 @@ location / {
 - **button_style** (required) – `square`, `rounded`, `pill`, `outline`, or `minimal`
 - **button_color** (required) – Hex color code (e.g., `#1DA1F2`)
 - **Background** (optional) – URL to background image
-- **favicon** (optional) – URL to favicon
+- **favicon** (not working) – URL to favicon
 
 ---
 
