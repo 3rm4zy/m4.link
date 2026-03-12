@@ -1,11 +1,7 @@
 # m4.link
-
->[!warning] Project is still new and in early stage development
-
 A Self Hostable "LinkTree" Clone written with basic Python/Jinja/HTML/CSS. No admin/control server/interface - just configure a `.ini` file and deploy!
 
 ## Features
-
 - **Light-Weight** - Generated static HTML at startup served by Python & Jinja
 - **Config-Based** - Customize everything via `config.ini`
 - **Docker Ready** - Single container deployment
@@ -15,8 +11,14 @@ A Self Hostable "LinkTree" Clone written with basic Python/Jinja/HTML/CSS. No ad
 
 ## Quick Start
 
-### 1. Create `config.ini`
+### 1. Create a working directory
+We need a folder for our container's compose file and config to live in.
 
+```bash
+mkdir /location/of/choice/m4.link && cd /location/of/choice/m4.link
+```
+
+### 2. Create the config file
 Create a `config.ini` file with your information:
 
 ```ini
@@ -44,13 +46,12 @@ URL=https://tangled.org/
 Icon=https://images.com/logo.png
 ```
 
-### 2. Create `docker-compose.yml`
-
+### 3. Create the compose file
 ```yaml
 services:
-  m4.link:
+  m4link:
     image: 3rm4zy/m4.link:latest
-    container_name: m4.link
+    container_name: m4link
     user: 1000:1000
     ports:
       - "5000:5000"
@@ -84,44 +85,74 @@ services:
           memory: 64M
 ```
 
-### 3. Deploy
-
+### 4. Deploy m4.link
+Within the working directory:
 ```bash
 docker-compose up -d
 ```
 
 Visit `http://server-ip:5000` - your site should be ready!
 
-### 4. Configure Reverse Proxy
+### 4. Configure your Reverse Proxy
 
-Point your reverse proxy to `http://server-ip:5000`
+#### NGINX (example)
+```
+server {
+    listen 80;
+    server_name links.example.com;
 
-Example NGINX:
-```nginx
-location / {
-    proxy_pass http://server-ip:5000;
+    location / {
+        proxy_pass http://localhost:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_by;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_valid 200 1h;
+        add_header X-Cache-Status $upstream_cache_status;
+    }
 }
+```
+
+#### Caddy (example)
+```
+links.example.com {
+    reverse_proxy localhost:5000
+    header Cache-Control "public, max-age=3600"
+}
+```
+
+#### Traefik (example)
+```
+services:
+  m4link:
+    image: 3rm4zy/m4.link:latest
+    container_name: m4link
+    # ... the rest of the docker compose file...
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.m4link.rule=Host(`links.example.com`)"
+      - "traefik.http.routers.m4link.entrypoints=websecure"
+      - "traefik.http.routers.m4link.tls.certresolver=letsencrypt"
+      - "traefik.http.services.m4link.loadbalancer.server.port=5000"
+      - "traefik.http.middlewares.m4link-cache.headers.customresponseheaders.Cache-Control=public, max-age=3600"
+      - "traefik.http.routers.m4link.middlewares=m4link-cache"
 ```
 
 ## Configuration
 
 ### [profile] Section
-
 - **Name** (required) – Your display name
 - **Picture** (required) – URL to profile picture
 - **Description** (required) – Your bio/tagline
 - **Avatar_Style** (optional) – `rounded` (circle) or `square` (default: rounded)
 
----
 
 ### [settings] Section
-
 - **button_style** (required) – `square`, `rounded`, `pill`, `outline`, or `minimal`
 - **button_color** (required) – Hex color code (e.g., `#1DA1F2`)
 - **Background** (optional) – URL to background image
 - **favicon** (not working) – URL to favicon
 
----
 
 ### [link X] Section (Repeatable)
 
@@ -133,51 +164,38 @@ Create as many links as needed: `[link 1]`, `[link 2]`, `[link 3]`, etc.
 - **Description** (optional) – Link description (shown below title)
 - **Background** (optional) – Override button color for this link only
 
----
 
-## Button Styles
-
+### Button Styles
 - **square** – 8px rounded corners
 - **rounded** – 15px rounded corners
 - **pill** – 50px rounded corners (very round)
 - **outline** – Transparent with colored border
 - **minimal** – Underline only
 
----
 
-## Avatar Styles
-
+### Avatar Styles
 - **rounded** – Circle (default)
 - **square** – Square with slight rounding
 
----
 
-## Update Configuration
+### Update Configuration
 
 Edit `config.ini` and restart the container:
 
 ```bash
 docker-compose restart
 ```
-
 That's it! No rebuild needed.
 
 ## How It Works
-
 1. Container starts
 2. `entrypoint.py` reads `config.ini`
 3. Generates `html/index.html` from template
 4. Flask serves the HTML on port 5000
 5. Your reverse proxy forwards requests to it
 
-## Security
-
-- Read-only filesystem (except `/tmp` and `/run`)
-- No privilege escalation allowed
-- `config.ini` mounted read-only
 
 ## Troubleshooting
-
 **Links not showing?**
 Check `config.ini` sections are named exactly: `[link 1]`, `[link 2]`, etc.
 
@@ -201,13 +219,9 @@ docker compose up -d
 ```
 
 ## License
-
 GPLv3
 
 ## Support
-
 For issues and suggestions, open an issue.
-
----
 
 Made with ❤️ - [3rm4zy](https://m4zy.link)

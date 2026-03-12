@@ -1,7 +1,7 @@
 services:
-  m4.link:
+  m4link:
     image: 3rm4zy/m4.link:latest
-    container_name: m4.link
+    container_name: m4link
     user: 1000:1000
     ports:
       - "5000:5000"
