@@ -10,7 +10,10 @@ COPY config.ini .
 COPY entrypoint.py .
 COPY app.py .
 
-RUN mkdir -p html
+
+RUN useradd -m -u 1000 appuser
+RUN mkdir -p html && chown -R appuser:appuser /app
+USER appuser
 
 EXPOSE 5000
 

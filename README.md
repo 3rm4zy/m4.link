@@ -2,16 +2,16 @@
 
 >[!warning] Project is still new and in early stage development
 
-A Self Hostable "LinkTree" Clone written with basic HTML/CSS/Javascript. No backend/admin server needed! - just configure a `.ini` file and deploy!
+A Self Hostable "LinkTree" Clone written with basic HTML/CSS/Javascript. No admin/control server/interface - just configure a `.ini` file and deploy!
 
 ## Features
 
-- **Zero Backend** - Generates static HTML at startup
+- **Light-Weight** - Generated static HTML at startup served by Python & Jinja
 - **Config-Based** - Customize everything via `config.ini`
 - **Docker Ready** - Single container deployment
-- **Customizable** - Multiple button styles, colors, and avatar options
+- **Customizable** - Fully customizable style and settings
 - **Responsive** - Mobile-friendly design
-- **Fast** - Pre-generated static HTML
+- **Fast** - It's just static HTML (use caching your reverse proxy for images)
 
 ## Quick Start
 
@@ -65,9 +65,9 @@ services:
       - NET_BIND_SERVICE
     read_only: true
     tmpfs:
-      - /tmp
-      - /run
-      - /app/html
+      - /tmp:mode=1777
+      - /run:mode=1777
+      - /app/html:mode=1777
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 30s
