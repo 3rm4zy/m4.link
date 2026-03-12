@@ -2,7 +2,7 @@
 
 >[!warning] Project is still new and in early stage development
 
-A Self Hostable "LinkTree" Clone written with basic HTML/CSS/Javascript. No admin/control server/interface - just configure a `.ini` file and deploy!
+A Self Hostable "LinkTree" Clone written with basic Python/Jinja/HTML/CSS. No admin/control server/interface - just configure a `.ini` file and deploy!
 
 ## Features
 
@@ -11,7 +11,7 @@ A Self Hostable "LinkTree" Clone written with basic HTML/CSS/Javascript. No admi
 - **Docker Ready** - Single container deployment
 - **Customizable** - Fully customizable style and settings
 - **Responsive** - Mobile-friendly design
-- **Fast** - It's just static HTML (use caching your reverse proxy for images)
+- **Fast** - It's just static HTML (use caching on your Rervse Proxy/Load Balancer)
 
 ## Quick Start
 
@@ -65,8 +65,8 @@ services:
       - NET_BIND_SERVICE
     read_only: true
     tmpfs:
-      - /tmp:mode=1777
-      - /run:mode=1777
+      - /tmp
+      - /run
       - /app/html:mode=1777
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
@@ -90,7 +90,7 @@ services:
 docker-compose up -d
 ```
 
-Visit `http://server-ip:5000` - your site is ready!
+Visit `http://server-ip:5000` - your site should be ready!
 
 ### 4. Configure Reverse Proxy
 
@@ -202,7 +202,7 @@ docker compose up -d
 
 ## License
 
-MIT
+GPLv3
 
 ## Support
 
