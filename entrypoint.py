@@ -22,7 +22,7 @@ settings = {
     'background': config.get('settings', 'Background') if config.has_option('settings', 'Background') else None,
 }
 
-# Extract Links
+# Read links
 links = []
 link_number = 1
 while True:
