@@ -1,10 +1,15 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+from urllib.parse import urlparse
 import os
 import json
 
 class CustomHTTPHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        # Health check endpoint
+
+        # Strip paramaters and other bs from the URL
+        path = urlparse(self.path).path
+
+        # Health check
         if self.path == '/health':
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
@@ -12,7 +17,7 @@ class CustomHTTPHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps({'status': 'ok'}).encode())
             return
         
-        # Serve index.html for root
+        # Serve index.html
         if self.path == '/':
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
