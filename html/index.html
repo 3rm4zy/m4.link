@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            
+            background-image: url('https://example.com/background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .profile {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        /* ========== PROFILE PICTURE STYLE ========== */
+        
+        .avatar {
+            border-radius: 50%;
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            
+            background-image: url('https://example.com/profile.jpg');
+            
+        }
+        .profile h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .profile .bio {
+            color: #666;
+            font-size: 16px;
+        }
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        /* ========== BUTTON STYLES ========== */
+        /* Square Style */
+        
+        /* Rounded Style */
+        
+        .link-wrapper {
+            border-radius: 15px;
+        }
+        
+        /* Pill Style */
+        
+        /* Outline Style */
+        
+        /* Minimal Style */
+        
+        /* Default styling for all buttons */
+        .link-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--link-color, #1DA1F2);
+            padding: 15px 20px;
+            transition: all 0.3s ease;
+        }
+        .link-wrapper:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .link-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            flex-shrink: 0;
+        }
+        .link-item {
+            background: none;
+            padding: 0;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex: 1;
+        }
+        .link-content {
+            flex: 1;
+            text-align: center;
+            margin-left: -52px;
+        }
+        .link-title {
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 1.2;
+        }
+        .link-description {
+            font-size: 13px;
+            opacity: 0.85;
+            line-height: 1;
+            margin-top: 2px;
+        }
+        /* ========== FOOTER ========== */
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .footer a {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                border-radius: 15px;
+            }
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+            .profile h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <div class="avatar"></div>
+            <h1>Your Name</h1>
+            <p class="bio">Your bio here</p>
+        </div>
+        <div class="links">
+            
+            <div class="link-wrapper" style="--link-color: #1DA1F2;">
+                <div class="link-icon" style="background-image: url('https://example.com/icon.png');"></div>
+                <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <div class="link-content">
+                        <div class="link-title">My Website</div>
+                        <div class="link-description">(My personal website)</div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="link-wrapper" >
+                <div class="link-icon" style="background-image: url('https://example.com/github.png');"></div>
+                <a href="https://github.com/username" target="_blank" rel="noopener noreferrer" class="link-item">
+                    <div class="link-content">
+                        <div class="link-title">GitHub</div>
+                        
+                    </div>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+    <div class="footer">
+        <a href="https://tangled.org/3r.m4zy.lol/m4.link" target="_blank" rel="noopener noreferrer">Built with m4.link</a>
+    </div>
+</body>
+</html>
