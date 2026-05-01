@@ -1,4 +1,6 @@
 # m4.link
+<img width="1870" height="1012" alt="image" src="https://github.com/user-attachments/assets/859a60a0-8d5a-4305-9807-4675796a1cdb" />
+
 A Self Hostable "LinkTree" Clone written with basic Python/Jinja/HTML/CSS. No admin/control server/interface - just configure a `.ini` file and deploy!
 
 ## Features
